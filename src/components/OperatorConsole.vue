@@ -13,7 +13,8 @@ import {
   CheckCircle2, 
   XCircle,
   LayoutGrid,
-  HelpCircle
+  HelpCircle,
+  Volume2
 } from 'lucide-vue-next';
 
 const store = useGameStore();
@@ -60,6 +61,12 @@ const handleReveal = async () => {
 const handleRescue = () => {
   if (store.currentCard) {
     audioService.playRescue(store.currentCard);
+  }
+};
+
+const handleReplay = (card: any) => {
+  if (card) {
+    audioService.playAnswer(card);
   }
 };
 
@@ -278,18 +285,26 @@ const validateBoard = async () => {
             <div 
               v-for="(card, index) in [...store.history, store.currentCard].filter(Boolean).reverse()" 
               :key="card!.card_id"
+              @click="handleReplay(card)"
               :class="[
-                'flex items-center gap-4 p-3 rounded-xl border transition-all',
-                index === 0 ? 'bg-indigo-50 border-indigo-200 ring-2 ring-indigo-100 shadow-sm' : 'bg-white border-slate-100 opacity-60'
+                'flex items-center gap-4 p-3 rounded-xl border transition-all cursor-pointer group',
+                index === 0 ? 'bg-indigo-50 border-indigo-200 ring-2 ring-indigo-100 shadow-sm' : 'bg-white border-slate-100 opacity-60 hover:opacity-100 hover:border-indigo-300 hover:shadow-md'
               ]"
+              title="Click to replay card name"
             >
               <img :src="card!.image_path" class="w-12 h-16 rounded shadow-sm object-cover" />
               <div>
                 <p class="font-bold text-slate-800">{{ card!.name_spanish }}</p>
                 <p class="text-xs text-slate-400">Card #{{ card!.card_id }}</p>
               </div>
-              <div v-if="index === 0" class="ml-auto">
-                <span class="text-[10px] font-black bg-indigo-200 text-indigo-700 px-2 py-0.5 rounded-full uppercase">Current</span>
+              <div class="ml-auto flex items-center gap-2">
+                <Volume2 
+                  :size="16" 
+                  class="text-indigo-400 opacity-0 group-hover:opacity-100 transition-opacity"
+                />
+                <div v-if="index === 0">
+                  <span class="text-[10px] font-black bg-indigo-200 text-indigo-700 px-2 py-0.5 rounded-full uppercase">Current</span>
+                </div>
               </div>
             </div>
             
