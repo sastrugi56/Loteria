@@ -15,6 +15,7 @@ The app handles pacing, bilingual audio, and visual history tracking to reduce c
 - **Two Game Modes**:
   - **Classic**: Automated flow with dramatic pauses.
   - **Trivia**: Interactive guessing game where the card stays hidden until revealed.
+- **Click-to-Replay**: Operator can click any card in the history to replay its name for players who missed it.
 - **Board Registry**: Generate and print 100% unique, non-repeating Lotería boards.
 - **Win Validator**: Quickly verify if a player has actually won by checking their Board ID.
 
@@ -46,14 +47,11 @@ The app handles pacing, bilingual audio, and visual history tracking to reduce c
 ## 🌐 GitHub Pages Deployment
 This app is optimized for static hosting on GitHub Pages.
 
-1. **Build the project**:
+1. **One-Command Deploy**:
    ```bash
-   npm run build
+   npm run deploy
    ```
-
-2. **Deploy**:
-   Push the contents of the `dist/` folder to the `gh-pages` branch. 
-   *Note: The app is configured with relative paths (`base: './'`) to support subfolder hosting.*
+   *Note: This command automatically builds the project, handles `.nojekyll` creation, and pushes the `dist/` folder to the `gh-pages` branch.*
 
 ## 📁 Project Structure
 - `src/components/`: Core UI components (OperatorConsole, TVDisplay, BoardDesigner).

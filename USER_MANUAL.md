@@ -55,7 +55,8 @@ The **Operator Console** is the "brain" of the game.
   2. Once players guess, click "Reveal" to show the card and play the answer.
 
 ### **Operator Controls**
-- **Rescue Button**: Click the lifebuoy icon to replay the card's Spanish name clearly.
+- **Rescue Button**: Click the lifebuoy icon to play the card's Spanish name clearly for the *current* card.
+- **Click-to-Replay**: Any card in the **History Sidebar** (right column) can be clicked at any time. This will replay that specific card's Spanish name without interrupting the game flow. Look for the speaker icon when hovering over a card.
 - **Undo Last**: If you make a mistake, click "Undo Last" to put the card back in the deck.
 - **Reset Game**: Shuffles the deck and clears the history for a new round.
 
@@ -91,7 +92,7 @@ The **Board Designer** ensures every player has a 100% unique board.
    - **CRITICAL**: Move the downloaded `boards.json` into your `public/assets/` folder to sync the Win Validator.
 
 ### **Printing for Seniors**
-1. Click the **Printer Icon**.
+1. Click the **Printer Icon** to enter print-ready mode.
 2. **Printer Settings**:
    - Orientation: **Portrait**
    - Paper Size: **Letter (8.5" x 11")**
@@ -110,7 +111,24 @@ The **Board Designer** ensures every player has a 100% unique board.
 
 ---
 
-## **8. Production Deployment (No Source Code)**
+## **7. GitHub Pages Deployment (Static Hosting)**
+
+This application is optimized for static hosting on GitHub Pages, which is the easiest way to run the app on any device with internet access.
+
+### **One-Step Deployment**
+If you have configured the repository correctly, you can deploy your latest changes with a single command:
+```bash
+npm run deploy
+```
+
+### **What this does:**
+1. **Builds** the project into the `dist/` folder.
+2. **Creates** a `.nojekyll` file (required for Vue apps on GitHub).
+3. **Pushes** the compiled files to the `gh-pages` branch on GitHub.
+
+---
+
+## **8. Production Deployment (Manual Server)**
 
 You can run this app on any machine without revealing your source code (the `.vue` and `.ts` files).
 
