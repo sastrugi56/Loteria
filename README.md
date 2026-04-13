@@ -63,3 +63,15 @@ This app is optimized for static hosting on GitHub Pages.
 
 ---
 *Designed for Inclusive Play*
+
+## 📜 License & Disclaimer
+
+### Proof of Concept (PoC)
+**Important Note:** This application is a **Proof of Concept**. It was developed to demonstrate a specific use case for digitally mediated traditional games. It has not undergone rigorous security, stability, or legal compliance testing.
+
+### No Liability
+This software is provided "as is," without warranty of any kind, express or implied. The author(s) and copyright holders shall not be liable for any claims, damages, or other liability, whether in an action of contract, tort, or otherwise, arising from, out of, or in connection with the software or its use. If you choose to deploy or use this application, you do so entirely at your own risk.
+
+### License
+This project is licensed under the **MIT License**. See the [LICENSE](LICENSE) file for the full text.
+
