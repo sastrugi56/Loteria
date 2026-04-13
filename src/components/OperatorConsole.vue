@@ -20,7 +20,8 @@ import {
 const store = useGameStore();
 const boardIdInput = ref('');
 const isProcessing = ref(false);
-const validationResult = ref<{ matches: boolean; missing: number[] } | null>(null);
+const isBlackout = ref(false);
+const validationResult = ref<{ matches: boolean; missing: number[]; pattern?: string } | null>(null);
 
 // Load cards on mount
 onMounted(async () => {
@@ -121,11 +122,40 @@ const validateBoard = async () => {
     const calledIds = store.history.map(c => c.card_id);
     if (store.currentCard) calledIds.push(store.currentCard.card_id);
     
-    const missing = board.cards.filter((id: number) => !calledIds.includes(id));
-    validationResult.value = {
-      matches: missing.length === 0,
-      missing
-    };
+    if (isBlackout.value) {
+      // Blackout: All 16 cards must match
+      const missing = board.cards.filter((id: number) => !calledIds.includes(id));
+      validationResult.value = {
+        matches: missing.length === 0,
+        missing,
+        pattern: 'Full Blackout'
+      };
+    } else {
+      // Define standard Lotería Bingo patterns for 4x4 grid
+      const gridPatterns = [
+        { name: 'Row', indices: [0, 1, 2, 3] },
+        { name: 'Row', indices: [4, 5, 6, 7] },
+        { name: 'Row', indices: [8, 9, 10, 11] },
+        { name: 'Row', indices: [12, 13, 14, 15] },
+        { name: 'Column', indices: [0, 4, 8, 12] },
+        { name: 'Column', indices: [1, 5, 9, 13] },
+        { name: 'Column', indices: [2, 6, 10, 14] },
+        { name: 'Column', indices: [3, 7, 11, 15] },
+        { name: 'Diagonal', indices: [0, 5, 10, 15] },
+        { name: 'Diagonal', indices: [3, 6, 9, 12] },
+        { name: '4 Corners', indices: [0, 3, 12, 15] }
+      ];
+
+      for (const p of gridPatterns) {
+        const patternCardIds = p.indices.map(idx => board.cards[idx]);
+        const missingInPattern = patternCardIds.filter(id => !calledIds.includes(id));
+        if (missingInPattern.length === 0) {
+          validationResult.value = { matches: true, missing: [], pattern: p.name };
+          return;
+        }
+      }
+      validationResult.value = { matches: false, missing: [], pattern: 'None Found' };
+    }
   } else {
     alert('Board ID not found.');
   }
@@ -316,9 +346,20 @@ const validateBoard = async () => {
 
         <!-- Board Validator -->
         <div class="bg-white rounded-2xl shadow-lg border p-6 space-y-4">
-          <h3 class="font-bold text-slate-700 flex items-center gap-2">
-            <CheckCircle2 :size="18" /> Win Validator
-          </h3>
+          <div class="flex justify-between items-center">
+            <h3 class="font-bold text-slate-700 flex items-center gap-2">
+              <CheckCircle2 :size="18" /> Win Validator
+            </h3>
+            
+            <label class="flex items-center gap-2 cursor-pointer group">
+              <span class="text-xs font-bold uppercase tracking-wider text-slate-400 group-hover:text-indigo-600 transition-colors">Blackout Mode</span>
+              <div class="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" v-model="isBlackout" class="sr-only peer">
+                <div class="w-11 h-6 bg-slate-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-indigo-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-indigo-600"></div>
+              </div>
+            </label>
+          </div>
+
           <div class="flex gap-2">
             <input 
               v-model="boardIdInput"
@@ -336,14 +377,20 @@ const validateBoard = async () => {
           </div>
 
           <!-- Validation Result Display -->
-          <div v-if="validationResult" :class="['p-4 rounded-xl border-2 flex items-center gap-4', validationResult.matches ? 'bg-emerald-50 border-emerald-200 text-emerald-700' : 'bg-rose-50 border-rose-200 text-rose-700']">
+          <div v-if="validationResult" :class="['p-4 rounded-xl border-2 flex items-center gap-4 transition-all animate-in fade-in zoom-in-95', validationResult.matches ? 'bg-emerald-50 border-emerald-200 text-emerald-700' : 'bg-rose-50 border-rose-200 text-rose-700']">
             <CheckCircle2 v-if="validationResult.matches" :size="32" />
             <XCircle v-else :size="32" />
             
             <div>
-              <p class="font-bold text-lg">{{ validationResult.matches ? '¡LOTERÍA!' : 'NOT A WIN' }}</p>
-              <p v-if="!validationResult.matches" class="text-sm opacity-80">
+              <p class="font-bold text-lg leading-tight">{{ validationResult.matches ? '¡LOTERÍA!' : 'NOT A WIN' }}</p>
+              <p v-if="validationResult.matches && validationResult.pattern" class="text-xs font-black uppercase tracking-widest opacity-70">
+                Pattern: {{ validationResult.pattern }}
+              </p>
+              <p v-if="!validationResult.matches && isBlackout" class="text-sm opacity-80">
                 Missing: {{ validationResult.missing.length }} cards
+              </p>
+              <p v-if="!validationResult.matches && !isBlackout" class="text-sm opacity-80">
+                No winning lines found.
               </p>
             </div>
           </div>
