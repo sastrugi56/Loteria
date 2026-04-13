@@ -61,9 +61,14 @@ The **Operator Console** is the "brain" of the game.
 - **Reset Game**: Shuffles the deck and clears the history for a new round.
 
 ### **Win Validator**
-1. Locate the **Serial Number** on a player's physical board (e.g., #012).
-2. Type "12" into the Win Validator box.
-3. The box will flash **Green** if the board is complete, or **Red** if cards are still missing.
+1. **Toggle Mode**: By default, the app looks for "Bingo" wins. Turn on **Blackout Mode** if you require the entire 16-card board to be filled.
+2. **Validate**: Type the **Board ID** (e.g., #012) into the box and press Enter.
+3. **Patterns**: In Bingo mode, the app automatically checks for:
+   - **Horizontal Rows** (4 patterns)
+   - **Vertical Columns** (4 patterns)
+   - **Diagonals** (2 patterns)
+   - **4 Corners** (The four outer edge cards)
+4. **Result**: The box will flash **Green** with the name of the pattern found (e.g., "Pattern: Diagonal") or **Red** if no win is detected.
 
 ---
 

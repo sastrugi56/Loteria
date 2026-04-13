@@ -17,7 +17,10 @@ The app handles pacing, bilingual audio, and visual history tracking to reduce c
   - **Trivia**: Interactive guessing game where the card stays hidden until revealed.
 - **Click-to-Replay**: Operator can click any card in the history to replay its name for players who missed it.
 - **Board Registry**: Generate and print 100% unique, non-repeating Lotería boards.
-- **Win Validator**: Quickly verify if a player has actually won by checking their Board ID.
+- **Smart Win Validator**: 
+  - Supports **Bingo-style wins** (Rows, Columns, Diagonals, and 4 Corners).
+  - Toggleable **Blackout Mode** for full-board wins.
+  - Identifies the specific winning pattern found.
 
 ## 🛠️ Technology Stack
 - **Frontend**: Vue 3 (Composition API) + Vite

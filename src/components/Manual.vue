@@ -83,11 +83,27 @@ const closeManual = () => {
           <HelpCircle :size="32" /> 3. Checking for Winners
         </h2>
         <p class="text-lg text-slate-600 mb-6">
-          When a player shouts <strong>"¡LOTERÍA!"</strong>, ask them for their <strong>Board ID</strong> (the number # printed at the top-right of their card).
+          When a player shouts <strong>"¡LOTERÍA!"</strong>, follow these steps to verify their board:
         </p>
-        <div class="flex items-center gap-6 bg-slate-900 p-8 rounded-[2.5rem] text-white shadow-2xl">
-          <div class="w-16 h-16 bg-indigo-500 rounded-2xl flex items-center justify-center font-black text-4xl shadow-inner">#</div>
-          <p class="text-2xl font-medium leading-tight">Type the number into the <span class="text-indigo-400 font-black">Win Validator</span> and hit enter. <span class="text-emerald-400">Green</span> means Win!</p>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+          <div class="bg-indigo-50 p-6 rounded-3xl border-2 border-indigo-100">
+            <h4 class="font-black text-indigo-700 uppercase mb-2">Bingo Mode (Default)</h4>
+            <p class="text-sm leading-relaxed text-indigo-900/70">
+              The app automatically checks for a winning line (horizontal, vertical, or diagonal) or the 4 corners. 
+            </p>
+          </div>
+          <div class="bg-slate-900 p-6 rounded-3xl text-white">
+            <h4 class="font-black text-indigo-400 uppercase mb-2">Blackout Mode</h4>
+            <p class="text-sm leading-relaxed text-slate-400">
+              Toggle the "Blackout" switch in the validator to require all 16 cards to be filled for a win.
+            </p>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-6 bg-slate-100 p-8 rounded-[2.5rem] text-slate-800 shadow-inner">
+          <div class="w-16 h-16 bg-indigo-600 rounded-2xl flex items-center justify-center font-black text-4xl text-white shadow-lg">#</div>
+          <p class="text-2xl font-medium leading-tight">Type the Board ID into the <span class="text-indigo-600 font-black">Win Validator</span>. <span class="text-emerald-600 font-bold">Green</span> means it's a confirmed win!</p>
         </div>
       </section>
 
